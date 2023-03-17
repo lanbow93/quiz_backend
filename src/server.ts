@@ -1,4 +1,5 @@
 // Import dependencies
+import cookieParser from "cookie-parser";
 import { Application, Request, Response } from "express";
 const express = require("express");
 const cors = require("cors");
@@ -14,6 +15,8 @@ const app: Application = express();
 app.use(morgan("tiny"));
 app.use(cors({}))
 app.use(express.json())
+app.use(cookieParser())
+
 
 // Routes
 app.get("/", (request: Request, response: Response) => {
@@ -22,7 +25,7 @@ app.get("/", (request: Request, response: Response) => {
 
 
 //Listener
-type PortValue = Number | undefined | String
+type PortValue = number | undefined | string
 const port: PortValue = process.env.PORT
 app.listen(port, () => {
     console.log(`Listening on port: ${port}`)
