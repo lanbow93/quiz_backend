@@ -2,7 +2,14 @@ import mongoose from "../db/connection";
 
 const {Schema, model} = mongoose;
 
-const submissionSchema = new Schema({
+interface ISubmission {
+    quizID: string,
+    grade?: number,
+    name?: string,
+    questions: [[string]]
+}
+
+const submissionSchema = new Schema<ISubmission>({
     quizID: {type: String, required: true},
     grade: Number,
     name: String,
