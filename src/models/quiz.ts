@@ -1,13 +1,9 @@
 import mongoose from "../db/connection";
+import { IQuiz } from "../utils/InterfacesUsed";
 
 const {Schema, model} = mongoose;
 
-interface IQuiz {
-    username: string,
-    title: string,
-    password?: string,
-    questions: [[string]]
-};
+
 
 const quizSchema = new Schema<IQuiz>({
     username: String,

@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import mongoose, { Error } from "mongoose";
 
-dotenv.config
+dotenv.config()
 
-const DATABASE_URL: string = process.env.DATABASE_URL!
+const DATABASE_URL: string = process.env.DATABASE_URL
 
 mongoose.connect(DATABASE_URL)
 
