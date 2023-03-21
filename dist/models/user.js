@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = __importDefault(require("../db/connection"));
 const { Schema, model } = connection_1.default;
 const userSchema = new Schema({
+    name: { type: String, required: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true }
 }, { timestamps: true });

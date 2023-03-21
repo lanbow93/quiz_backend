@@ -8,6 +8,7 @@ const {Schema, model} = mongoose;
 const quizSchema = new Schema<IQuiz>({
     username: String,
     title: String,
+    isPublic: Boolean,
     password: String,
     questions: [[String]]
 },{timestamps: true});

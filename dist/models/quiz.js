@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const connection_1 = __importDefault(require("../db/connection"));
 const { Schema, model } = connection_1.default;
-;
 const quizSchema = new Schema({
     username: String,
     title: String,
+    isPublic: Boolean,
     password: String,
     questions: [[String]]
 }, { timestamps: true });

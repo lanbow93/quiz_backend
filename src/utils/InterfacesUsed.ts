@@ -1,9 +1,12 @@
+import { CookieParseOptions } from "cookie-parser";
 import { Request } from "express";
+import { JwtPayload } from "jsonwebtoken";
 
 // Models Interfaces
 export interface IQuiz {
     username: string,
     title: string,
+    isPublic: boolean,
     password?: string,
     questions: [[string]]
 };
@@ -40,7 +43,11 @@ export interface IPayload{
 }
 
 
-export interface IRequestWithLoad extends Request {
-    payload: IPayload
+export interface IRequestWithPayload extends Request {
+    payload: string | JwtPayload | IPayload
+}
+
+export interface IRequestWithPayloadAndCookies extends IRequestWithPayload {
+    cookies: CookieParseOptions
 }
 

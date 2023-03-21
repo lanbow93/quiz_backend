@@ -3,7 +3,7 @@ import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
-import { IPayload, IUserObject, IUserPass } from "../utils/InterfacesUsed";
+import { IUserObject, IUserPass } from "../utils/InterfacesUsed";
 
 dotenv.config()
 
@@ -39,7 +39,7 @@ router.post("/login", async (request: Request, response: Response) => {
         if (user){
             const passwordCheck: Boolean = await bcrypt.compare(password, user.password)
             if(passwordCheck) {
-                const payload: IPayload = {username}
+                const payload = {username}
                 const token = await jwt.sign(payload, process.env.SECRET)
                 response.cookie("token", token, {httpOnly: true}).json({payload, status: "logged in"})
             } else {

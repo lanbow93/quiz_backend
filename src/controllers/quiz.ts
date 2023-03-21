@@ -1,17 +1,17 @@
 import express, { Request, Response } from "express"
-import Quiz from "../models/quiz"
 import isLoggedIn from "../utils/isLoggedIn"
-import { IRequestWithLoad } from "../utils/InterfacesUsed"
+import Quiz from "../models/quiz"
 
 const router = express.Router()
 
 router.use(isLoggedIn)
 
 // Index
-router.get("/", async (request:IRequestWithLoad, response: Response) => {
+router.get("/", async (request:any, response: Response) => {
     try{
-        const username: string = request.payload.username
-        
+        const username = request.payload.username
+        const quizzes = await Quiz.find({username})
+        response.json(quizzes)
     } catch(error) {
         response.status(400).json({error})
     }
@@ -28,18 +28,24 @@ router.delete("/:id" , async (request:Request, response: Response) => {
 })
 
 // Update 
-router.put("/:id", async (request:Request, response: Response) => {
+router.put("/:id", async (request:any, response: Response) => {
     try{
-        
+        const username = request.payload.username
+        request.body.username = username
+        const quiz = await Quiz.findByIdAndUpdate(request.params.id, request.body, )
+        response.json(quiz)
     } catch(error) {
         response.status(400).json({error})
     }
 })
 
 // Create
-router.post("/", async (request:Request, response: Response) => {
+router.post("/", async (request:any, response: Response) => {
     try{
-        
+        const username = request.payload.username
+        request.body.username = username
+        const quiz = await Quiz.create(request.body)
+        response.json(quiz)
     } catch(error) {
         response.status(400).json({error})
     }
@@ -47,9 +53,11 @@ router.post("/", async (request:Request, response: Response) => {
 
 
 // Show
-router.get("/:id", async (request:Request, response: Response) => {
+router.get("/:id", async (request:any, response: Response) => {
     try{
-        
+        const username = request.payload.username
+        const quiz = await Quiz.findOne({username, _id: request.params.id})
+        response.json(quiz)
     } catch(error) {
         response.status(400).json({error})
     }
