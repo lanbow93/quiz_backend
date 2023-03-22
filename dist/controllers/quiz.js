@@ -45,6 +45,7 @@ router.post("/", async (request, response) => {
         const username = request.payload.username;
         request.body.username = username;
         const quiz = await quiz_1.default.create(request.body);
+        console.log(quiz);
         response.json(quiz);
     }
     catch (error) {

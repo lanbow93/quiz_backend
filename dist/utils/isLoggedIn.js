@@ -10,6 +10,7 @@ async function isLoggedIn(request, response, next) {
         if (token) {
             const payload = await jsonwebtoken_1.default.verify(token, process.env.SECRET);
             request.payload = payload;
+            next();
         }
         else {
             throw "Not logged In";

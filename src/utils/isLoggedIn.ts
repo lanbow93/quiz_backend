@@ -12,6 +12,7 @@ async function isLoggedIn  (request: any, response: Response, next: NextFunction
             const payload = await jwt.verify(token, process.env.SECRET);
             // Add payload to request
             request.payload = payload;
+            next()
         } else {
             throw "Not logged In"
         }
