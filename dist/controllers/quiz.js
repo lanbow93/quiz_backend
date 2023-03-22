@@ -20,6 +20,10 @@ router.get("/", async (request, response) => {
 });
 router.delete("/:id", async (request, response) => {
     try {
+        const username = request.payload.username;
+        request.body.username = username;
+        const quiz = await quiz_1.default.deleteOne({ _id: request.params.id, username });
+        response.json(quiz);
     }
     catch (error) {
         response.status(400).json({ error });
@@ -29,7 +33,7 @@ router.put("/:id", async (request, response) => {
     try {
         const username = request.payload.username;
         request.body.username = username;
-        const quiz = await quiz_1.default.findByIdAndUpdate(request.params.id, request.body);
+        const quiz = await quiz_1.default.findByIdAndUpdate(request.params.id, request.body, { new: true });
         response.json(quiz);
     }
     catch (error) {

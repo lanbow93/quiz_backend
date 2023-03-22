@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const auth_1 = __importDefault(require("./controllers/auth"));
+const quiz_1 = __importDefault(require("./controllers/quiz"));
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -15,6 +16,7 @@ app.use(cors({}));
 app.use(express.json());
 app.use((0, cookie_parser_1.default)());
 app.use("/auth", auth_1.default);
+app.use("/quiz", quiz_1.default);
 app.get("/", (request, response) => {
     response.json({ verification: "Server is working" });
 });

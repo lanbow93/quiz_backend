@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express"
+import express, {  Response } from "express"
 import isLoggedIn from "../utils/isLoggedIn"
 import Quiz from "../models/quiz"
 
@@ -19,9 +19,12 @@ router.get("/", async (request:any, response: Response) => {
 
 
 // Destroy
-router.delete("/:id" , async (request:Request, response: Response) => {
+router.delete("/:id" , async (request:any, response: Response) => {
     try{
-        
+        const username = request.payload.username
+        request.body.username = username
+        const quiz = await Quiz.deleteOne({_id: request.params.id, username})
+        response.json(quiz)
     } catch(error) {
         response.status(400).json({error})
     }
@@ -32,7 +35,7 @@ router.put("/:id", async (request:any, response: Response) => {
     try{
         const username = request.payload.username
         request.body.username = username
-        const quiz = await Quiz.findByIdAndUpdate(request.params.id, request.body, )
+        const quiz = await Quiz.findByIdAndUpdate(request.params.id, request.body, {new: true} )
         response.json(quiz)
     } catch(error) {
         response.status(400).json({error})

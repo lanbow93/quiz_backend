@@ -2,6 +2,8 @@
 import cookieParser from "cookie-parser";
 import { Application, Request, Response } from "express";
 import authRouter from "./controllers/auth"
+import quizRouter from "./controllers/quiz"
+
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -21,6 +23,8 @@ app.use(cookieParser())
 
 // Routes
 app.use("/auth", authRouter)
+app.use("/quiz", quizRouter)
+
 
 app.get("/", (request: Request, response: Response) => {
     response.json({verification: "Server is working"})
