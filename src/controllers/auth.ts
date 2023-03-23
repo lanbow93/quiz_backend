@@ -3,7 +3,10 @@ import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
+import Quiz from "./models/quiz";
+import userLoggedIn from "./utils/UserVerified";
 import { IUserObject, IUserPass } from "../utils/InterfacesUsed";
+
 
 dotenv.config()
 
@@ -11,7 +14,7 @@ dotenv.config()
 const router: Router = express.Router()
 
 
-// Signup Post
+// Admin Signup Post
 router.post("/signup", async (request: Request, response: Response) => {
     try{
         // Hash password
@@ -27,7 +30,7 @@ router.post("/signup", async (request: Request, response: Response) => {
     }
 })
 
-// Login Post
+// Admin Login Post
 router.post("/login", async (request: Request, response: Response) => {
     try {
 
@@ -54,10 +57,29 @@ router.post("/login", async (request: Request, response: Response) => {
 
 }) 
 
-
-// Logout Post
+// Admin Logout Post
 router.post("/logout", async (request: Request, response: Response) => {
     response.clearCookie("token").json({response: "You are Logged Out"})
+})
+
+// User quiz verification Post
+
+router.post("/verification/:id" ,async (request:any, response: Response) => {
+    try{
+        
+        const {password} = request.body
+        //Check for existing quiz
+        const quiz = await Quiz.findOne({ _id: request.params.id})
+
+        if (quiz) {
+            const passwordCheck: Boolean = await bcrypt.compare(password, quiz.password)
+        } else {
+            response.status(400).json({error: "Password does not match"})
+            response.status(400).json({error: "Quiz does not exist"})
+        }
+    } catch(error) {
+        response.status(400).json(error)
+    }
 })
 
 export default router

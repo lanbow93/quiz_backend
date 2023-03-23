@@ -3,22 +3,22 @@ import jwt from "jsonwebtoken"
 
 
 
-async function isLoggedIn  (request: any, response: Response, next: NextFunction){
+async function userLoggedIn  (request: any, response: Response, next: NextFunction){
     try {
         // Check if token is in the cookies
-        const { token = false} = request.cookies;
-        if (token) {
+        const { userToken = false} = request.cookies;
+        if (userToken) {
             // Verify token
-            const payload = await jwt.verify(token, process.env.SECRET);
+            const payload = await jwt.verify(userToken, process.env.SECRET);
             // Add payload to request
             request.payload = payload;
             next()
         } else {
-            throw "Not logged In"
+            throw "Not Verified"
         }
     } catch (error) {
         response.status(400).json({error})
     }
 }
 
-export default isLoggedIn
+export default userLoggedIn

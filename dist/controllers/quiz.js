@@ -4,10 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const isLoggedIn_1 = __importDefault(require("../utils/isLoggedIn"));
+const AdminLoggedIn_1 = __importDefault(require("../utils/AdminLoggedIn"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const quiz_1 = __importDefault(require("../models/quiz"));
 const router = express_1.default.Router();
-router.use(isLoggedIn_1.default);
+router.use(AdminLoggedIn_1.default);
 router.get("/", async (request, response) => {
     try {
         const username = request.payload.username;
@@ -33,6 +34,7 @@ router.put("/:id", async (request, response) => {
     try {
         const username = request.payload.username;
         request.body.username = username;
+        request.body.password = await bcryptjs_1.default.hash(request.body.password, await bcryptjs_1.default.genSalt(10));
         const quiz = await quiz_1.default.findByIdAndUpdate(request.params.id, request.body, { new: true });
         response.json(quiz);
     }
@@ -44,6 +46,7 @@ router.post("/", async (request, response) => {
     try {
         const username = request.payload.username;
         request.body.username = username;
+        request.body.password = await bcryptjs_1.default.hash(request.body.password, await bcryptjs_1.default.genSalt(10));
         const quiz = await quiz_1.default.create(request.body);
         console.log(quiz);
         response.json(quiz);

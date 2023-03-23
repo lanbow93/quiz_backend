@@ -1,10 +1,11 @@
 import express, {  Response } from "express"
-import isLoggedIn from "../utils/isLoggedIn"
+import adminLoggedIn from "../utils/AdminLoggedIn"
+import bcrypt from "bcryptjs";
 import Quiz from "../models/quiz"
 
 const router = express.Router()
 
-router.use(isLoggedIn)
+router.use(adminLoggedIn)
 
 // Index
 router.get("/", async (request:any, response: Response) => {
@@ -35,6 +36,7 @@ router.put("/:id", async (request:any, response: Response) => {
     try{
         const username = request.payload.username
         request.body.username = username
+        request.body.password = await bcrypt.hash(request.body.password, await bcrypt.genSalt(10))
         const quiz = await Quiz.findByIdAndUpdate(request.params.id, request.body, {new: true} )
         response.json(quiz)
     } catch(error) {
@@ -47,6 +49,7 @@ router.post("/", async (request:any, response: Response) => {
     try{
         const username = request.payload.username
         request.body.username = username
+        request.body.password = await bcrypt.hash(request.body.password, await bcrypt.genSalt(10))
         const quiz = await Quiz.create(request.body)
         console.log(quiz)
         response.json(quiz)

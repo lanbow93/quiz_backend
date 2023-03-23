@@ -4,6 +4,8 @@ import { Application, Request, Response } from "express";
 import authRouter from "./controllers/auth"
 import quizRouter from "./controllers/quiz"
 
+
+
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -29,7 +31,6 @@ app.use("/quiz", quizRouter)
 app.get("/", (request: Request, response: Response) => {
     response.json({verification: "Server is working"})
 })
-
 
 //Listener
 type PortValue = number | undefined | string
