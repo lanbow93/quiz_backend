@@ -11,7 +11,7 @@ const UserVerified_1 = __importDefault(require("../utils/UserVerified"));
 const router = express_1.default.Router();
 router.get("/index/:id", AdminLoggedIn_1.default, async (request, response) => {
     try {
-        const submissions = await submission_1.default.find({ _id: request.params.id });
+        const submissions = await submission_1.default.find({ quizID: request.params.id });
         response.json(submissions);
     }
     catch (error) {
