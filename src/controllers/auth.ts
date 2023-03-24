@@ -3,8 +3,7 @@ import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
-import Quiz from "./models/quiz";
-import userLoggedIn from "./utils/UserVerified";
+import Quiz from "../models/quiz";
 import { IUserObject, IUserPass } from "../utils/InterfacesUsed";
 
 
@@ -73,8 +72,14 @@ router.post("/verification/:id" ,async (request:any, response: Response) => {
 
         if (quiz) {
             const passwordCheck: Boolean = await bcrypt.compare(password, quiz.password)
+            if(passwordCheck) {
+                const payload = request.params.id
+                const token = await jwt.sign(payload, process.env.SECRET)
+                response.cookie("userToken", token, {httpOnly: true}).json({payload, status: "logged in"})
+            } else {
+                response.status(400).json({error: "Password does not match"})
+            }
         } else {
-            response.status(400).json({error: "Password does not match"})
             response.status(400).json({error: "Quiz does not exist"})
         }
     } catch(error) {

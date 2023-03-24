@@ -8,6 +8,7 @@ const user_1 = __importDefault(require("../models/user"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const quiz_1 = __importDefault(require("../models/quiz"));
 dotenv_1.default.config();
 const router = express_1.default.Router();
 router.post("/signup", async (request, response) => {
@@ -45,6 +46,29 @@ router.post("/login", async (request, response) => {
 });
 router.post("/logout", async (request, response) => {
     response.clearCookie("token").json({ response: "You are Logged Out" });
+});
+router.post("/verification/:id", async (request, response) => {
+    try {
+        const { password } = request.body;
+        const quiz = await quiz_1.default.findOne({ _id: request.params.id });
+        if (quiz) {
+            const passwordCheck = await bcryptjs_1.default.compare(password, quiz.password);
+            if (passwordCheck) {
+                const payload = request.params.id;
+                const token = await jsonwebtoken_1.default.sign(payload, process.env.SECRET);
+                response.cookie("userToken", token, { httpOnly: true }).json({ payload, status: "logged in" });
+            }
+            else {
+                response.status(400).json({ error: "Password does not match" });
+            }
+        }
+        else {
+            response.status(400).json({ error: "Quiz does not exist" });
+        }
+    }
+    catch (error) {
+        response.status(400).json(error);
+    }
 });
 exports.default = router;
 //# sourceMappingURL=auth.js.map
