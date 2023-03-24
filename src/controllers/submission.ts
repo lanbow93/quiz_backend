@@ -1,6 +1,8 @@
-import express, {  Response } from "express"
+import express, {  Request, Response } from "express"
 import adminLoggedIn from "../utils/AdminLoggedIn"
 import Submission from "../models/submission"
+import Quiz from "../models/quiz"
+import userLoggedIn from "../utils/UserVerified"
 
 const router = express.Router()
 
@@ -17,7 +19,7 @@ router.get("/index/:id", adminLoggedIn, async (request:any, response: Response) 
 
 
 // Destroy
-router.delete("/:id" , adminLoggedIn, async (request:any, response: Response) => {
+router.delete("/:id" , adminLoggedIn, async (request: Request, response: Response) => {
     try{
         const submission = await Submission.deleteOne({_id: request.params.id})
         response.json(submission)
@@ -27,7 +29,7 @@ router.delete("/:id" , adminLoggedIn, async (request:any, response: Response) =>
 })
 
 // Create
-router.post("/", async (request:any, response: Response) => {
+router.post("/", async (request: Request, response: Response) => {
     try{
         const submission = await Submission.create(request.body)
         response.json(submission)
@@ -40,9 +42,18 @@ router.post("/", async (request:any, response: Response) => {
 // Show
 router.get("/view/:id", adminLoggedIn, async (request:any, response: Response) => {
     try{
-        const username = request.payload.username
-        const submission = await Submission.findOne({username, _id: request.params.id})
+        const submission = await Submission.findOne({ _id: request.params.id})
         response.json(submission)
+    } catch(error) {
+        response.status(400).json({error})
+    }
+})
+
+// Access specific quiz after verified
+router.get("/access/:id", userLoggedIn, async (request: any, response: Response) => {
+    try{
+        const quiz = await Quiz.find({_id: request.params.id});
+        response.json(quiz)
     } catch(error) {
         response.status(400).json({error})
     }

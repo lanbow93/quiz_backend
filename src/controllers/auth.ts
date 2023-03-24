@@ -65,7 +65,6 @@ router.post("/logout", async (request: Request, response: Response) => {
 
 router.post("/verification/:id" ,async (request:any, response: Response) => {
     try{
-        
         const {password} = request.body
         //Check for existing quiz
         const quiz = await Quiz.findOne({ _id: request.params.id})

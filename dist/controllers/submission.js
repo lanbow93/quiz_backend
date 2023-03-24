@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const AdminLoggedIn_1 = __importDefault(require("../utils/AdminLoggedIn"));
 const submission_1 = __importDefault(require("../models/submission"));
+const quiz_1 = __importDefault(require("../models/quiz"));
+const UserVerified_1 = __importDefault(require("../utils/UserVerified"));
 const router = express_1.default.Router();
 router.get("/index/:id", AdminLoggedIn_1.default, async (request, response) => {
     try {
@@ -36,9 +38,17 @@ router.post("/", async (request, response) => {
 });
 router.get("/view/:id", AdminLoggedIn_1.default, async (request, response) => {
     try {
-        const username = request.payload.username;
-        const submission = await submission_1.default.findOne({ username, _id: request.params.id });
+        const submission = await submission_1.default.findOne({ _id: request.params.id });
         response.json(submission);
+    }
+    catch (error) {
+        response.status(400).json({ error });
+    }
+});
+router.get("/access/:id", UserVerified_1.default, async (request, response) => {
+    try {
+        const quiz = await quiz_1.default.find({ _id: request.params.id });
+        response.json(quiz);
     }
     catch (error) {
         response.status(400).json({ error });

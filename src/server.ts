@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import { Application, Request, Response } from "express";
 import authRouter from "./controllers/auth"
 import quizRouter from "./controllers/quiz"
+import submissionRouter from "./controllers/submission"
 
 
 
@@ -26,6 +27,7 @@ app.use(cookieParser())
 // Routes
 app.use("/auth", authRouter)
 app.use("/quiz", quizRouter)
+app.use("/user", submissionRouter)
 
 
 app.get("/", (request: Request, response: Response) => {
