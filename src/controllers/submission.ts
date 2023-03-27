@@ -6,7 +6,6 @@ import userLoggedIn from "../utils/UserVerified"
 
 const router = express.Router()
 
-
 // Index
 router.get("/index/:id", adminLoggedIn, async (request:any, response: Response) => {
     try{

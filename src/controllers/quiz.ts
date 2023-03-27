@@ -8,7 +8,7 @@ const router = express.Router()
 router.use(adminLoggedIn)
 
 // Index
-router.get("/", async (request:any, response: Response) => {
+router.get("/", async (request:any , response: Response) => {
     try{
         const username = request.payload.username
         const quizzes = await Quiz.find({username})
