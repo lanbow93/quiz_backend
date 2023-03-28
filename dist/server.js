@@ -13,7 +13,10 @@ const morgan = require("morgan");
 require("dotenv").config();
 const app = express();
 app.use(morgan("tiny"));
-app.use(cors({}));
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}));
 app.use(express.json());
 app.use((0, cookie_parser_1.default)());
 app.use("/auth", auth_1.default);
