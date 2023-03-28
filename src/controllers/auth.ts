@@ -76,7 +76,8 @@ router.post("/verification/:id" ,async (request:any, response: Response) => {
                 const token = await jwt.sign(payload, process.env.SECRET)
                 response.cookie("userToken", token, {
                     httpOnly: true,
-                    path: "/"
+                    path: "/",
+                    secure: request.hostname === "locahhost" ? false : true,
                 }).json({payload, status: "logged in"})
             } else {
                 response.status(400).json({error: "Password does not match"})
