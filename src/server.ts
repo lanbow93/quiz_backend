@@ -20,7 +20,7 @@ const app: Application = express();
 // Middleware
 app.use(morgan("tiny"));
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:5173",
     credentials: true
 }))
 app.use(express.json())
