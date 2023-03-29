@@ -47,6 +47,7 @@ router.post("/login", async (request: Request, response: Response) => {
                     httpOnly: true,
                     path: "/",
                     sameSite: "none",
+                    maxAge : 3600,
                     secure: request.hostname === "locahhost" ? false : true,}).json({payload, status: "logged in"})
             } else {
                 response.status(400).json({error: "Password does not match"})
@@ -83,6 +84,7 @@ router.post("/verification/:id" ,async (request:any, response: Response) => {
                     path: "/",
                     sameSite: "none",
                     secure: request.hostname === "locahhost" ? false : true,
+                    maxAge : 3600,
                 }).json({payload, status: "logged in"})
             } else {
                 response.status(400).json({error: "Password does not match"})
