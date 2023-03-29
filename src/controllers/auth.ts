@@ -46,6 +46,7 @@ router.post("/login", async (request: Request, response: Response) => {
                 response.cookie("token", token, {
                     httpOnly: true,
                     path: "/",
+                    sameSite: "none",
                     secure: request.hostname === "locahhost" ? false : true,}).json({payload, status: "logged in"})
             } else {
                 response.status(400).json({error: "Password does not match"})
@@ -76,10 +77,11 @@ router.post("/verification/:id" ,async (request:any, response: Response) => {
             const passwordCheck: Boolean = await bcrypt.compare(password, quiz.password)
             if(passwordCheck) {
                 const payload = request.params.id
-                const userToken = await jwt.sign(payload, process.env.SECRET)
-                response.cookie("userToken", userToken, {
+                const token = await jwt.sign(payload, process.env.SECRET)
+                response.cookie("userToken", token, {
                     httpOnly: true,
                     path: "/",
+                    sameSite: "none",
                     secure: request.hostname === "locahhost" ? false : true,
                 }).json({payload, status: "logged in"})
             } else {

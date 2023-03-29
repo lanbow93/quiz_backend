@@ -30,7 +30,12 @@ router.post("/login", async (request, response) => {
             if (passwordCheck) {
                 const payload = { username };
                 const token = await jsonwebtoken_1.default.sign(payload, process.env.SECRET);
-                response.cookie("token", token, { httpOnly: true }).json({ payload, status: "logged in" });
+                response.cookie("token", token, {
+                    httpOnly: true,
+                    path: "/",
+                    sameSite: "none",
+                    secure: request.hostname === "locahhost" ? false : true,
+                }).json({ payload, status: "logged in" });
             }
             else {
                 response.status(400).json({ error: "Password does not match" });
@@ -59,6 +64,7 @@ router.post("/verification/:id", async (request, response) => {
                 response.cookie("userToken", token, {
                     httpOnly: true,
                     path: "/",
+                    sameSite: "none",
                     secure: request.hostname === "locahhost" ? false : true,
                 }).json({ payload, status: "logged in" });
             }
