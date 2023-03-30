@@ -34,6 +34,7 @@ router.post("/login", async (request, response) => {
                     httpOnly: true,
                     path: "/",
                     sameSite: "none",
+                    maxAge: 3600,
                     secure: request.hostname === "locahhost" ? false : true,
                 }).json({ payload, status: "logged in" });
             }
@@ -66,6 +67,7 @@ router.post("/verification/:id", async (request, response) => {
                     path: "/",
                     sameSite: "none",
                     secure: request.hostname === "locahhost" ? false : true,
+                    maxAge: 3600,
                 }).json({ payload, status: "logged in" });
             }
             else {

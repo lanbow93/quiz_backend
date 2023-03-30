@@ -7,7 +7,7 @@ const router = express.Router();
 // Index
 router.get("/", async (request:any , response: Response) => {
     try{
-        const quizzes = await Quiz.find({isPublic: true}).sort({title: 1})
+        const quizzes = await Quiz.find({isPublic: true}).sort({"title": 1})
         response.json(quizzes)
     } catch(error) {
         response.status(400).json({error})

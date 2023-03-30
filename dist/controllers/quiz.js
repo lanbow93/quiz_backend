@@ -12,7 +12,7 @@ router.use(AdminLoggedIn_1.default);
 router.get("/", async (request, response) => {
     try {
         const username = request.payload.username;
-        const quizzes = await quiz_1.default.find({ username });
+        const quizzes = await quiz_1.default.find({ username }).sort({ "title": 1 });
         response.json(quizzes);
     }
     catch (error) {
@@ -48,7 +48,6 @@ router.post("/", async (request, response) => {
         request.body.username = username;
         request.body.password = await bcryptjs_1.default.hash(request.body.password, await bcryptjs_1.default.genSalt(10));
         const quiz = await quiz_1.default.create(request.body);
-        console.log(quiz);
         response.json(quiz);
     }
     catch (error) {

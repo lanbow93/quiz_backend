@@ -7,6 +7,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const auth_1 = __importDefault(require("./controllers/auth"));
 const quiz_1 = __importDefault(require("./controllers/quiz"));
 const submission_1 = __importDefault(require("./controllers/submission"));
+const public_1 = __importDefault(require("./controllers/public"));
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -22,6 +23,7 @@ app.use((0, cookie_parser_1.default)());
 app.use("/auth", auth_1.default);
 app.use("/quiz", quiz_1.default);
 app.use("/user", submission_1.default);
+app.use("/public", public_1.default);
 app.get("/", (request, response) => {
     response.json({ verification: "Server is working" });
 });

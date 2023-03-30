@@ -11,7 +11,7 @@ router.use(adminLoggedIn)
 router.get("/", async (request:any , response: Response) => {
     try{
         const username = request.payload.username
-        const quizzes = await Quiz.find({username}).sort({title: 1})
+        const quizzes = await Quiz.find({username}).sort({"title": 1})
         response.json(quizzes)
     } catch(error) {
         response.status(400).json({error})
@@ -51,7 +51,6 @@ router.post("/", async (request:any, response: Response) => {
         request.body.username = username
         request.body.password = await bcrypt.hash(request.body.password, await bcrypt.genSalt(10))
         const quiz = await Quiz.create(request.body)
-        console.log(quiz)
         response.json(quiz)
     } catch(error) {
         response.status(400).json({error})

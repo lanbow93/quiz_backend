@@ -8,7 +8,7 @@ const router = express.Router()
 // Index
 router.get("/index/:id", adminLoggedIn, async (request:any, response: Response) => {
     try{
-        const submissions = await Submission.find({quizID: request.params.id})
+        const submissions = await Submission.find({quizID: request.params.id}).sort({"name": 1})
         response.json(submissions)
     } catch(error) {
         response.status(400).json({error})
