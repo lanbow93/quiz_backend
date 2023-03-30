@@ -4,7 +4,7 @@ import { Application, Request, Response } from "express";
 import authRouter from "./controllers/auth"
 import quizRouter from "./controllers/quiz"
 import submissionRouter from "./controllers/submission"
-
+import publicRouter from "./controllers/public"
 
 
 const express = require("express");
@@ -31,6 +31,7 @@ app.use(cookieParser())
 app.use("/auth", authRouter)
 app.use("/quiz", quizRouter)
 app.use("/user", submissionRouter)
+app.use("/public", publicRouter )
 
 
 app.get("/", (request: Request, response: Response) => {

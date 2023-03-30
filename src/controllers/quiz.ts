@@ -11,7 +11,7 @@ router.use(adminLoggedIn)
 router.get("/", async (request:any , response: Response) => {
     try{
         const username = request.payload.username
-        const quizzes = await Quiz.find({username})
+        const quizzes = await Quiz.find({username}).sort({title: 1})
         response.json(quizzes)
     } catch(error) {
         response.status(400).json({error})
