@@ -84,7 +84,6 @@ router.post("/verification/:id" ,async (request:any, response: Response) => {
                     path: "/",
                     sameSite: "none",
                     secure: request.hostname === "locahhost" ? false : true,
-                    maxAge : 3600,
                 }).json({payload, status: "logged in"})
             } else {
                 response.status(400).json({error: "Password does not match"})
