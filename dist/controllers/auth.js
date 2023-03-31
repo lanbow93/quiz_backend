@@ -67,7 +67,6 @@ router.post("/verification/:id", async (request, response) => {
                     path: "/",
                     sameSite: "none",
                     secure: request.hostname === "locahhost" ? false : true,
-                    maxAge: 3600,
                 }).json({ payload, status: "logged in" });
             }
             else {
