@@ -20,7 +20,7 @@ const app: Application = express();
 // Middleware
 app.use(morgan("tiny"));
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://pro-quiz-wizard.netilfy.app"],
     credentials: true
 }))
 app.use(express.json())
