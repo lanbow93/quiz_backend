@@ -52,7 +52,7 @@ router.post("/login", async (request, response) => {
 router.post("/logout", async (request, response) => {
     response.clearCookie("token").json({ response: "You are Logged Out" });
 });
-router.post("/verification/:id", async (request, response) => {
+router.post("/:id", async (request, response) => {
     try {
         const { password } = request.body;
         const quiz = await quiz_1.default.findOne({ _id: request.params.id });

@@ -32,9 +32,7 @@ router.post("/signup", async (request: Request, response: Response) => {
 // Admin Login Post
 router.post("/login", async (request: Request, response: Response) => {
     try {
-
         const {username, password}: IUserPass = request.body
-
         //Check for user
         const user: IUserObject = await User.findOne({username})
 
@@ -67,7 +65,7 @@ router.post("/logout", async (request: Request, response: Response) => {
 
 // User quiz verification Post
 
-router.post("/verification/:id" ,async (request:any, response: Response) => {
+router.post("/:id" , async (request:any, response: Response) => {
     try{
         const {password} = request.body
         //Check for existing quiz
