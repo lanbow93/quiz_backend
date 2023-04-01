@@ -18,7 +18,7 @@ router.get("/", async (request, response) => {
 });
 router.get("/access/:id", UserVerified_1.default, async (request, response) => {
     try {
-        const quiz = await quiz_1.default.find({ _id: request.params.id });
+        const quiz = await quiz_1.default.findOne({ _id: request.params.id });
         response.json(quiz);
     }
     catch (error) {

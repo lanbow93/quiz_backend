@@ -17,7 +17,7 @@ router.get("/", async (request:any , response: Response) => {
 // Access specific quiz after verified
 router.get("/access/:id", userLoggedIn, async (request: any, response: Response) => {
     try{
-        const quiz = await Quiz.find({_id: request.params.id});
+        const quiz = await Quiz.findOne({_id: request.params.id});
         response.json(quiz)
     } catch(error) {
         response.status(400).json({error})
