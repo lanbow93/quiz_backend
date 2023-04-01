@@ -15,7 +15,7 @@ require("dotenv").config();
 const app = express();
 app.use(morgan("tiny"));
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://pro-quiz-wizard.netlify.app"],
     credentials: true
 }));
 app.use(express.json());
