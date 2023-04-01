@@ -34,7 +34,6 @@ router.post("/login", async (request, response) => {
                     httpOnly: true,
                     path: "/",
                     sameSite: "none",
-                    maxAge: 3600,
                     secure: request.hostname === "locahhost" ? false : true,
                 }).json({ payload, status: "logged in" });
             }
